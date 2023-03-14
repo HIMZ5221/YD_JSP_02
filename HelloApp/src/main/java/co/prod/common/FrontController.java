@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.prod.vo.ProductVO;
 
+import co.prod.controller.MemberListAjax;
 import co.prod.controller.MemberListControl;
+import co.prod.controller.MemberRemoveAjax;
 import co.prod.controller.MembersControl;
 import co.prod.controller.ProductInfoControl;
 import co.prod.controller.ProductListControl;
@@ -33,11 +35,16 @@ public class FrontController extends HttpServlet{
 		System.out.println("FrontController 의 init이 실행되었습니다.");
 		map.put("/memberList.do", new MemberListControl());
 		map.put("/members.do", new MembersControl());
+		// Ajax 호출(SPA처리
+		map.put("/memberListAjax.do", new MemberListAjax());
+		map.put("/memberRemoveAjax.do", new MemberRemoveAjax());
 		
 		//상품 목록
 		map.put("/productList.do", new ProductListControl());
 		//상품한건정보.
 		map.put("/productInfo.do", new ProductInfoControl());
+		
+		
 		
 	}
 	
@@ -60,7 +67,10 @@ public class FrontController extends HttpServlet{
 		if(viewPage.endsWith(".jsp")) {
 			viewPage = "/WEB-INF/views/" + viewPage;
 		//}else if(viewPage.endsWith(".tiles")) {
-			
+		} else if (viewPage.endsWith(".ajax")) {
+			resp.setContentType("text/json;charset=utf-8");
+			resp.getWriter().append(viewPage.substring(0, viewPage.length() -5));
+			return;
 		}
 		ProductService service = new ProductServiceImpl();
 		List<ProductVO> list = service.products();

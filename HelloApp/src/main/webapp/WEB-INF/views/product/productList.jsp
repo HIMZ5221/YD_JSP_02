@@ -6,11 +6,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     
-<%
-  List<ProductVO> products = (List<ProductVO>) request.getAttribute("list");
   
   // 공지사항 목록 table형식으로 화면출력.
-%>
 <!-- product/productList.jsp -->
 
   <section class="py-5">
